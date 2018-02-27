@@ -3,7 +3,6 @@ import AppBar from 'material-ui/AppBar';
 import AutoComplete from 'material-ui/AutoComplete';
 import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
-import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
@@ -17,7 +16,6 @@ export default connect ( state => ({
   contentPage: state.contentPage,
   listEmails: state.listEmails,
   search: state.search,
-  // searchFocused: state.search.searchFocused
 }))(class ToolbarComponent extends Component {
   state = {
     contentTitle: '',
@@ -36,39 +34,36 @@ export default connect ( state => ({
 
   render() {
     const styles = this._styles();
-    // const titleText = this.props.contentPage.data ?
-    // const contentTitle = this.state.contentTitle ? this.state.contentTitle : "Simple Inbox";
     const contentTitle = this.state.emailsPrev ?  "Simple Inbox" : this.props.contentPage.data.title;
-    // const title = this.state.searchFocused ? "Search" : contentTitle;
     const title = this.props.search.searchFocused ? "Search" : contentTitle;
 
     let searchFocusedOnResponsive = false;
-    if(this.props.search.searchFocused && screen.width < 600)
-      searchFocusedOnResponsive = true;
+    if (this.props.search.searchFocused && screen.width < 600) {
+        searchFocusedOnResponsive = true;
+    }
 
     return (
       <div>
         {
           searchFocusedOnResponsive ?
-            <div>
-              <FontIcon className="material-icons">close</FontIcon>
-
+            <div style={styles.Search.body}>
+              <IconButton tooltip="close search" onClick={this._onSearchClosed.bind(this)} style={styles.Search.closeButton}>
+                <FontIcon className="material-icons">close</FontIcon>
+              </IconButton>
               <div>
                 <AutoComplete
                   ref="searchInput"
                   hintText='Search'
-                  hintStyle={{color: 'white'}}
-                  searchText={'Search'}
+                  hintStyle={{color: 'gray'}}
+                  searchText={''}
                   dataSource={this._resultTitles()}
                   onUpdateInput={(text, datasource, params) => this._onUpdateInput(text, datasource, params) }
                   floatingLabelText={false}
                   fullWidth={true}
                   filter={AutoComplete.caseInsensitiveFilter}
-                  /*onFocus={() => this._onSearchFocused(true)}*/
-                  /*onClose={() => this._onSearchFocused(false)}*/
                   underlineStyle={{display: 'none'}}
                   onNewRequest={this._onNewRequest.bind(this)}
-                  /*style={styles.search.autoComplete}*/
+                  style={styles.Search.autoComplete}
                 >
                 </AutoComplete>
               </div>
@@ -94,7 +89,7 @@ export default connect ( state => ({
               titleStyle={styles.AppBar.titleStyle}
             >
               <SearchBar
-                /*onSearchFocused={this._onSearchFocused.bind(this)} */
+                onSearchFocused={this._onSearchFocused.bind(this)}
                 searchLoading={this.props.searchLoading}
               />
             </AppBar>
@@ -108,12 +103,15 @@ export default connect ( state => ({
     }
 
     _onSearchFocused(bool) {
-      // this.setState({searchFocused});
+      console.log('onSearchFocused');
       SearchAction.searchFocuse(bool);
     }
 
+    _onSearchClosed() {
+    SearchAction.searchFocuse(false);
+    }
+
     _onSideBarToggled() {
-      // console.log('***************');
       this.props.onSideBarToggled();
     }
 
@@ -159,7 +157,6 @@ export default connect ( state => ({
 
         AppBar: {
           root: {
-            // backgroundColor: this.state.searchFocused ? '#f2f2f2' : 'rgb(0, 188, 212)',
             backgroundColor: this.props.search.searchFocused ? '#f2f2f2' : 'rgb(0, 188, 212)',
             position: 'fixed',
             top: 0,
@@ -173,8 +170,12 @@ export default connect ( state => ({
         },
 
         Search: {
+          closeButton: {
+            float: 'left'
+          },
           autoComplete: {
-
+            float: 'left',
+            position: 'fixed'
           }
         }
       }

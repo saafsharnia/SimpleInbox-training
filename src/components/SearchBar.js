@@ -23,7 +23,7 @@ export default connect(state => ({
         {
           screen.width < 600 ?
 
-            <FontIcon className="material-icons" style={styles.search.searchIcon.narrow} onClick={() => this._onSearchFocused(true)}>search</FontIcon>
+            <FontIcon className="material-icons" style={styles.search.searchIcon.narrow} onClick={() => this.props.onSearchFocused(true)}>search</FontIcon>
 
             :
 
@@ -40,8 +40,8 @@ export default connect(state => ({
                   floatingLabelText={false}
                   fullWidth={true}
                   filter={AutoComplete.caseInsensitiveFilter}
-                  onFocus={() => this._onSearchFocused(true)}
-                  onClose={() => this._onSearchFocused(false)}
+                  onFocus={() => this.props.onSearchFocused(true)}
+                  onClose={() => this.props.onSearchFocused(false)}
                   underlineStyle={{display: 'none'}}
                   onNewRequest={this._onNewRequest.bind(this)}
                   style={styles.search.autoComplete}
@@ -63,13 +63,13 @@ export default connect(state => ({
     console.log('on narrow screen clicked');
   }
 
-  _onSearchFocused(bool) {
-    // let searchFocused = !this.state.searchFocused;
-    // this.setState({searchFocused});
-    // this.props.onSearchFocused(searchFocused);
-    SearchAction.searchFocuse(bool);
-
-  }
+  // _onSearchFocused(bool) {
+  //   // let searchFocused = !this.state.searchFocused;
+  //   // this.setState({searchFocused});
+  //   this.props.onSearchFocused(bool);
+  //   // SearchAction.searchFocuse(bool);
+  //
+  // }
 
   _resultTitles() {
     const searchResult = this.props.search.searchResult ? this.props.search.searchResult : [];
@@ -95,7 +95,7 @@ export default connect(state => ({
       if (item === searchResult[i].title) {
         var content = searchResult[i].content;
         var title = searchResult[i].title;
-        this._onSearchFocused(false);
+        this.props.onSearchFocused(false);
         SearchAction.getPage(content, title);
       }
     }
@@ -105,7 +105,6 @@ export default connect(state => ({
     return {
       search: {
         container: {
-          // backgroundColor: this.state.searchFocused ? 'white' : 'rgba(178, 208, 212, 0.3)',
           backgroundColor: this.props.search.searchFocused ? 'white' : 'rgba(178, 208, 212, 0.3)',
           position: 'absolute',
           left: '25%',
@@ -122,7 +121,6 @@ export default connect(state => ({
         searchIcon: {
           wide: {
             fontSize: 35,
-            // color: this.state.searchFocused ? '#000' : 'white',
             color: this.props.search.searchFocused ? '#000' : 'white',
             marginTop: 7,
             marginLeft: 10,
