@@ -63,14 +63,6 @@ export default connect(state => ({
     console.log('on narrow screen clicked');
   }
 
-  // _onSearchFocused(bool) {
-  //   // let searchFocused = !this.state.searchFocused;
-  //   // this.setState({searchFocused});
-  //   this.props.onSearchFocused(bool);
-  //   // SearchAction.searchFocuse(bool);
-  //
-  // }
-
   _resultTitles() {
     const searchResult = this.props.search.searchResult ? this.props.search.searchResult : [];
     let dataSource = [];
