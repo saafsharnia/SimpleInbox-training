@@ -21,6 +21,7 @@ export default connect ( state => ({
     contentTitle: '',
     emailsPrev: false,
     dataSource: [],
+      searchText: ''
   };
 
   componentWillReceiveProps(nextProps) {
@@ -55,7 +56,7 @@ export default connect ( state => ({
                   ref="searchInput"
                   hintText='Search'
                   hintStyle={{color: 'gray'}}
-                  searchText={''}
+                  searchText={this.state.searchText}
                   dataSource={this._resultTitles()}
                   onUpdateInput={(text, datasource, params) => this._onUpdateInput(text, datasource, params) }
                   floatingLabelText={false}
@@ -103,7 +104,6 @@ export default connect ( state => ({
     }
 
     _onSearchFocused(bool) {
-      console.log('onSearchFocused');
       SearchAction.searchFocuse(bool);
     }
 
