@@ -6,14 +6,14 @@ export default function SearchReducer(state = {searchResult: [], error: false, l
         error: false,
         loading: true
       };
-    case 'SearchLoaded': //TODO bad action names
+    case 'SearchLoaded':
       return {
+        ...state,
         searchResult: action.data,
         loading: false
       };
     case 'SearchErrorLoading':
       return {
-        //TODO we need boolean `error` here, do not put everything inside searchResult!
         ...state,
         error: true,
         loading: false
@@ -28,16 +28,6 @@ export default function SearchReducer(state = {searchResult: [], error: false, l
         ...state,
         searchFocused: false
       };
-    // case 'ShowPage':
-    //   return {
-    //     ...state,
-    //     pageContent: action.data
-    //   };
-    // case 'RemovePageContent':
-    //   return {
-    //     ...state,
-    //     pageContent: ''
-    //   };
     default:
       return state;
   }

@@ -20,7 +20,6 @@ class SearchAction {
         store.dispatch({type: 'SearchLoaded', data: response});
       },
       error: (xhr, status) => {
-        console.log('---- error', status);
         store.dispatch({type: 'SearchErrorLoading'});
         console.error(xhr, status);
       }
