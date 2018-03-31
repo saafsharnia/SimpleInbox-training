@@ -19,7 +19,7 @@ export default class App extends Component {
       <MuiThemeProvider>
         <div>
             <Dialog
-                title='Simple Inbox'
+                title='Simple Inbox Project'
                 actions={
                     <FlatButton
                         label="OK"
@@ -30,7 +30,7 @@ export default class App extends Component {
                 open={this.state.startDialogOpened}
                 onRequestClose={this._onDialogClose.bind(this)}
             >
-              This project is under developing
+              This project is under development and is constantly updating.
             </Dialog>
           <Toolbar
             onSideBarToggled={this._onSideBarToggled.bind(this)} SearchLoading={this.state.searchLoading}
