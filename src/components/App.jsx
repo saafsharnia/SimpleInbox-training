@@ -11,7 +11,7 @@ export default class App extends Component {
   state = {
     sideBarOpened: $(window).width() < 600 ? false : true,
     SearchLoading: false,
-    dialogOpen: true
+    dialogOpened: true
   };
 
   render(){
@@ -27,7 +27,7 @@ export default class App extends Component {
                         onClick={this._onDialogClose.bind(this)}
                     />
                 }
-                open={this.state.dialogOpen}
+                open={this.state.dialogOpened}
                 onRequestClose={this._onDialogClose.bind(this)}
             >
               This project is under developing
@@ -51,7 +51,7 @@ export default class App extends Component {
   }
 
   _onDialogClose() {
-    this.setState({dialogOpen: false});
+    this.setState({dialogOpened: false});
   }
 
   _updateWindowSize() {
